@@ -1,0 +1,31 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":gitSignOff",
+    ":disableDependencyDashboard"
+  ],
+  "ignorePresets": [
+    ":dependencyDashboard"
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true
+  },
+  "timezone": "America/New_York",
+  "schedule": ["* * * * 1-5"],
+  "packageRules": [
+    {
+      "managers": ["asdf"],
+      "groupName": "asdf updates"
+    },
+    {
+      "managers": ["github-actions"],
+      "groupName": "GitHub Actions updates"
+    },
+    {
+      "managers": ["gomod"],
+      "groupName": "Go module updates"
+
+    }
+  ]
+}
