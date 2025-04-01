@@ -27,11 +27,13 @@
       "matchManagers": ["dockerfile"],
       "matchDepNames": ["docker.io/library/golang"],
       "updateTypes": ["patch"],
+      "ignoreVersions": [".*-.*"],
       "groupName": "Go Docker updates"
     },
     {
       "matchManagers": ["dockerfile"],
       "excludePackageNames": ["docker.io/library/golang"],
+      "ignoreVersions": [".*-.*"],
       "groupName": "Docker updates"
     }
   ]
