@@ -15,17 +15,25 @@
   "schedule": ["* * * * 1-5"],
   "packageRules": [
     {
-      "managers": ["asdf"],
-      "groupName": "asdf updates"
+      "matchManagers": ["asdf"],
+      "groupName": "asdf updates",
+      "matchDepNames": ["golang"],
+      "updateTypes": ["minor", "patch"]
     },
     {
-      "managers": ["github-actions"],
+      "matchManagers": ["github-actions"],
       "groupName": "GitHub Actions updates"
     },
     {
-      "managers": ["gomod"],
-      "groupName": "Go module updates"
-
+      "matchManagers": ["gomod"],
+      "groupName": "Go module updates",
+      "matchDepNames": ["go"],
+      "updateTypes": ["minor", "patch"]
+    },
+    {
+      "matchManagers": ["dockerfile"],
+      "matchDepNames": ["docker.io/library/golang"],
+      "updateTypes": ["minor", "patch"]
     }
   ]
 }
