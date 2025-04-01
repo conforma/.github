@@ -9,7 +9,7 @@
     {
       "matchManagers": ["gomod"],
       "matchDepNames": ["go"],
-      "updateTypes": ["minor", "patch"],
+      "updateTypes": ["patch"],
       "groupName": "Go version updates"
     },
     {
@@ -20,13 +20,13 @@
     {
       "matchManagers": ["asdf"],
       "matchDepNames": ["golang"],
-      "updateTypes": ["minor", "patch"],
+      "updateTypes": ["patch"],
       "groupName": "asdf updates"
     },
     {
       "matchManagers": ["dockerfile"],
       "matchDepNames": ["docker.io/library/golang"],
-      "updateTypes": ["minor", "patch"],
+      "updateTypes": ["patch"],
       "groupName": "Go Docker updates"
     },
     {
