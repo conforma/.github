@@ -16,13 +16,13 @@
   "packageRules": [
     {
       "matchManagers": ["gomod"],
-      "matchDepNames": ["go"],
+      "matchDepNames": ["go", "toolchain"],
       "updateTypes": ["patch"],
       "groupName": "Go version updates"
     },
     {
       "matchManagers": ["gomod"],
-      "excludePackageNames": ["go"],
+      "excludePackageNames": ["go", "toolchain"],
       "groupName": "Go module updates"
     },
     {
