@@ -13,8 +13,6 @@
     "enabled": true
   },
   "timezone": "America/New_York",
-  // just apply updates during the work week
-  "schedule": ["* * * * 1-5"],
   "packageRules": [
     // Only allow patch updates for go and toolchain in the go.mod file.
     // This applies to all go.mod files in a repo.
