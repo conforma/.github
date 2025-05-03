@@ -12,7 +12,6 @@
     "enabled": true
   },
   "timezone": "America/New_York",
-  "schedule": ["* * * * 1-5"],
   "packageRules": [
     {
       "matchManagers": ["gomod"],
