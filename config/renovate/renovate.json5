@@ -14,6 +14,16 @@
   },
   "timezone": "America/New_York",
   "packageRules": [
+    // This overrides the default MintMaker config for Konflux CI tekton modules
+    // that is defined here:
+    // https://github.com/konflux-ci/mintmaker/blob/main/config/renovate/renovate.json
+    //
+    // The override is meant to automerge the konflux refs that don't require a migration
+    {
+      "matchManagers": ["tekton"],
+      "matchUpdateTypes": ["patch", "pin", "digest"],
+      "automerge": true
+    },
     // Only allow patch updates for go and toolchain in the go.mod file.
     // This applies to all go.mod files in a repo.
     // This is treated different than the rest of the gomod deps, because
