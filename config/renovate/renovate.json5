@@ -64,6 +64,15 @@
       "excludePackageNames": ["docker.io/library/golang"],
       "versioning": "semver",
       "groupName": "Docker updates"
+    },
+    // Allow all GitHub Actions updates based on filename pattern matching
+    {
+      "matchFiles": [
+        ".github/workflows/*.yml",
+        ".github/workflows/*.yaml"
+      ],
+      "automerge": true,
+      "groupName": "GitHub Actions updates"
     }
   ]
 }
