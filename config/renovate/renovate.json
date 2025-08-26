@@ -5,9 +5,7 @@
     ":prConcurrentLimit10",
     ":automergePatch",
     ":semanticCommitsDisabled",
-    ":ignoreUnstable",
-    ":docker",
-    ":gomod"
+    ":ignoreUnstable"
   ],
   "labels": [
     "dependencies"
@@ -18,6 +16,14 @@
       "groupName": "all major updates",
       "commitMessagePrefix": "🚨 Major:",
       "labels": [ "major-update" ]
+    },
+    {
+      "matchManagers": [ "dockerfile" ],
+      "groupName": "docker images"
+    },
+    {
+      "matchManagers": [ "gomod" ],
+      "groupName": "go modules"
     },
     {
       "matchManagers": [ "github-actions" ],
