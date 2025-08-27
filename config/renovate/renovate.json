@@ -27,7 +27,7 @@
       // Special case: Go minor updates are actually major changes
       // Go 1.24 -> 1.25 introduces new language features and should be treated carefully
       "description": "Treat Go minor updates as major (1.x bumps)",
-      "matchPackageNames": [ "go", "toolchain", "golang" ], // ASDF/Docker sources
+      "matchPackageNames": [ "golang/go", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ], // ASDF/Docker sources
       "matchDepNames": [ "go" ], // go.mod directive  
       "matchUpdateTypes": [ "minor" ],
       "commitMessagePrefix": "🚨",
