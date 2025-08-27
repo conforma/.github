@@ -8,42 +8,56 @@
     ":ignoreUnstable"
   ],
   "labels": [
-    "dependencies"
+    "renovate"
   ],
   "packageRules": [
     {
+      "description": "Highlight major version updates with special labeling and commit prefix",
       "matchUpdateTypes": [ "major" ],
-      "groupName": "all major updates",
-      "commitMessagePrefix": "🚨 Major:",
-      "labels": [ "major-update" ]
+      "commitMessagePrefix": "🚨",
+      "labels": [ "major" ],
+      "automerge": false
     },
     {
+      "description": "Treat Go minor updates as major (1.x bumps)",
+      "matchPackageNames": [ "go", "toolchain", "golang" ],
+      "matchDepNames": [ "go" ],
+      "matchUpdateTypes": [ "minor" ],
+      "commitMessagePrefix": "🚨",
+      "labels": [ "major" ],
+      "automerge": false
+    },
+    {
+      "description": "Group Docker image updates (excluding Go/Golang images which are handled separately)",
       "matchManagers": [ "dockerfile" ],
+      "matchPackageNames": [ "!golang", "!go" ],
       "groupName": "docker images"
     },
     {
+      "description": "Group Go module dependency updates (excluding the go directive which is handled separately)",
       "matchManagers": [ "gomod" ],
+      "matchDepNames": [ "!go" ],
       "groupName": "go modules"
     },
     {
+      "description": "Group GitHub Actions workflow updates",
       "matchManagers": [ "github-actions" ],
       "groupName": "github actions"
     },
     {
-      "matchPackageNames": [ "go", "toolchain" ],
-      "groupName": "go version"
+      "description": "Group Go version updates across ASDF (.tool-versions), go.mod directive, and Dockerfile golang images",
+      "groupName": "go version",
+      "matchPackageNames": [ "go", "toolchain", "golang" ],
+      "matchDepNames": [ "go" ],
+      "matchDatasources": [ "docker", "github-tags", "golang-version" ],
+      "commitMessageTopic": "golang version"
     },
     {
+      "description": "Auto-merge Tekton pipeline updates for non-major versions",
       "matchPackageNames": [ "github.com/tektoncd/pipeline" ],
       "groupName": "tektoncd pipelines",
       "matchUpdateTypes": [ "minor", "patch", "pin", "digest" ],
       "automerge": true
-    },
-    {
-      "matchPackageNames": [ "*" ],
-      "automerge": false,
-      "matchUpdateTypes": [ "major" ],
-      "labels": [ "major-update" ]
     }
   ]
 }
