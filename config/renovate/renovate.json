@@ -28,7 +28,7 @@
       // Go 1.24 -> 1.25 introduces new language features and should be treated carefully
       "description": "Treat Go minor updates as major (1.x bumps)",
       "matchPackageNames": [ "golang/go", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ], // ASDF/Docker sources
-      "matchDepNames": [ "go" ], // go.mod directive  
+      "matchDepNames": [ "go", "golang", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ], // go.mod directive  
       "matchUpdateTypes": [ "minor" ],
       "commitMessagePrefix": "🚨",
       "labels": [ "renovate", "major" ],
@@ -45,7 +45,7 @@
       // Go Dependencies: Group module updates  
       "description": "Group Go module dependency updates (excluding the go directive which is handled separately)",
       "matchManagers": [ "gomod" ],
-      "matchDepNames": [ "!go" ], // Exclude go directive - it goes to "go version" group
+      "matchDepNames": [ "!go", "!golang", "!docker.io/library/golang", "!registry.access.redhat.com/ubi9/go-toolset" ], // Exclude go directive - it goes to "go version" group
       "groupName": "go modules"
     },
     {
@@ -63,7 +63,7 @@
       "description": "Group Go version updates across ASDF (.tool-versions), go.mod directive, and Dockerfile golang images",
       "groupName": "go version",
       "matchPackageNames": [ "golang/go", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ], // ASDF + Docker golang
-      "matchDepNames": [ "go" ], // go.mod directive
+      "matchDepNames": [ "go", "golang", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ], // go.mod directive
       "matchDatasources": [ "docker", "github-tags", "golang-version" ],
       "commitMessageTopic": "golang version", // "Update golang version to vX.Y.Z"
       "branchTopic": "go-version" // Single branch: renovate/go-version
