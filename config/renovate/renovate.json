@@ -2,8 +2,8 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "recreateWhen": "always",
   "extends": [
-    ":prHourlyLimit2",
-    ":prConcurrentLimit10",
+    ":prHourlyLimitNone",
+    ":prConcurrentLimit20",
     ":automergePatch",
     ":semanticCommitsDisabled",
     ":ignoreUnstable"
