@@ -15,7 +15,7 @@
       "description": "Highlight major version updates with special labeling and commit prefix",
       "matchUpdateTypes": [ "major" ],
       "commitMessagePrefix": "🚨",
-      "labels": [ "major" ],
+      "labels": [ "renovate", "major" ],
       "automerge": false
     },
     {
@@ -24,7 +24,7 @@
       "matchDepNames": [ "go" ],
       "matchUpdateTypes": [ "minor" ],
       "commitMessagePrefix": "🚨",
-      "labels": [ "major" ],
+      "labels": [ "renovate", "major" ],
       "automerge": false
     },
     {
