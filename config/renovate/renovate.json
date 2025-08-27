@@ -1,64 +1,80 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "_comment": "Force config cache refresh",
+  
+  // Base configuration presets - these provide sensible defaults
   "extends": [
-    ":prHourlyLimitNone",
-    ":prConcurrentLimit20",
-    ":automergePatch",
-    ":semanticCommitsDisabled",
-    ":ignoreUnstable"
+    ":prHourlyLimitNone",       // Temporarily disabled for config testing
+    ":prConcurrentLimit20",     // Allow up to 20 open PRs simultaneously
+    ":automergePatch",          // Auto-merge patch updates (safe changes)
+    ":semanticCommitsDisabled", // Use plain commit messages
+    ":ignoreUnstable"           // Skip pre-release versions
   ],
+  
   "labels": [
-    "renovate"
+    "renovate" // Standard label for all Renovate PRs
   ],
+  
   "packageRules": [
     {
+      // Global rule: All major updates get special treatment
       "description": "Highlight major version updates with special labeling and commit prefix",
       "matchUpdateTypes": [ "major" ],
-      "commitMessagePrefix": "🚨",
-      "labels": [ "renovate", "major" ],
-      "automerge": false
+      "commitMessagePrefix": "🚨",        // Visual warning in commit messages
+      "labels": [ "renovate", "major" ],  // Extra label for filtering
+      "automerge": false                  // Always require manual review
     },
     {
+      // Special case: Go minor updates are actually major changes
+      // Go 1.24 -> 1.25 introduces new language features and should be treated carefully
       "description": "Treat Go minor updates as major (1.x bumps)",
-      "matchPackageNames": [ "go", "toolchain", "golang" ],
-      "matchDepNames": [ "go" ],
+      "matchPackageNames": [ "go", "toolchain", "golang" ], // ASDF/Docker sources
+      "matchDepNames": [ "go" ],                            // go.mod directive  
       "matchUpdateTypes": [ "minor" ],
       "commitMessagePrefix": "🚨",
       "labels": [ "renovate", "major" ],
       "automerge": false
     },
     {
+      // Docker: Group container image updates
       "description": "Group Docker image updates (excluding Go/Golang images which are handled separately)",
       "matchManagers": [ "dockerfile" ],
-      "matchPackageNames": [ "!golang", "!go" ],
+      "matchPackageNames": [ "!golang", "!go" ], // Exclude Go images - they go to "go version" group
       "groupName": "docker images"
     },
     {
+      // Go Dependencies: Group module updates  
       "description": "Group Go module dependency updates (excluding the go directive which is handled separately)",
       "matchManagers": [ "gomod" ],
-      "matchDepNames": [ "!go" ],
+      "matchDepNames": [ "!go" ], // Exclude go directive - it goes to "go version" group
       "groupName": "go modules"
     },
     {
+      // GitHub Actions: Group workflow updates
       "description": "Group GitHub Actions workflow updates",
       "matchManagers": [ "github-actions" ],
       "groupName": "github actions"
     },
     {
+      // Go Version: Unified Go version management across all sources
+      // This creates a SINGLE PR for Go version updates from:
+      // - .tool-versions (ASDF)
+      // - go.mod directive  
+      // - Dockerfile golang images
       "description": "Group Go version updates across ASDF (.tool-versions), go.mod directive, and Dockerfile golang images",
       "groupName": "go version",
-      "matchPackageNames": [ "go", "toolchain", "golang" ],
-      "matchDepNames": [ "go" ],
+      "matchPackageNames": [ "go", "toolchain", "golang" ], // ASDF + Docker golang
+      "matchDepNames": [ "go" ],                            // go.mod directive
       "matchDatasources": [ "docker", "github-tags", "golang-version" ],
-      "commitMessageTopic": "golang version"
+      "commitMessageTopic": "golang version",               // "Update golang version to vX.Y.Z"
+      "branchTopic": "go-version"                          // Single branch: renovate/go-version
     },
     {
+      // Tekton: Safe to auto-merge (infrastructure as code)
       "description": "Auto-merge Tekton pipeline updates for non-major versions",
       "matchPackageNames": [ "github.com/tektoncd/pipeline" ],
-      "groupName": "tektoncd pipelines",
-      "matchUpdateTypes": [ "minor", "patch", "pin", "digest" ],
-      "automerge": true
+      "groupName": "tektoncd pipelines", 
+      "matchUpdateTypes": [ "minor", "patch", "pin", "digest" ], // Exclude major
+      "automerge": true // Low risk - pipeline definitions are versioned
     }
   ]
 }
