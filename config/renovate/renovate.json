@@ -52,7 +52,6 @@
       "matchManagers": [ "asdf", "dockerfile", "gomod" ],
       "matchDatasources": [ "docker", "github-tags", "golang-version" ],
       "matchUpdateTypes": [ "patch" ],
-      "commitMessageSuffix": " (minor)",
       "commitMessageTopic": "golang version",
       "branchTopic": "go-version"
     },
@@ -66,7 +65,6 @@
       "matchDatasources": [ "docker", "github-tags", "golang-version" ],
       "matchUpdateTypes": [ "minor" ],
       "commitMessagePrefix": "🚨",
-      "commitMessageSuffix": " (major)",
       "labels": [ "renovate", "major" ],
       "automerge": false,
       "commitMessageTopic": "golang version",
