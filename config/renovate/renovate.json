@@ -3,7 +3,7 @@
 
   // Base configuration presets - these provide sensible defaults
   "extends": [
-    ":prHourlyLimitNone", // Temporarily disabled for config testing
+    "schedule:daily", // Run renovate each day before 4AM
     ":prConcurrentLimit20", // Allow up to 20 open PRs simultaneously
     ":automergePatch", // Auto-merge patch updates (safe changes)
     ":semanticCommitsDisabled", // Use plain commit messages
@@ -13,6 +13,9 @@
   "labels": [
     "renovate" // Standard label for all Renovate PRs
   ],
+
+  // Branch configuration: main + release branches v0.5+
+  "baseBranchPatterns": [ "main", "/^release-/", "!/^release-v0\\.[0-4]$/" ],
 
   "packageRules": [
     {
@@ -54,6 +57,16 @@
       "matchUpdateTypes": [ "patch" ],
       "commitMessageTopic": "golang version",
       "branchTopic": "go-version"
+    },
+    {
+      // Go Version: Block actual major updates (1.x -> 2.x)
+      "description": "Block Go major version updates beyond v1.x",
+      "matchPackageNames": [ "golang/go", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ],
+      "matchDepNames": [ "go", "golang", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ],
+      "matchManagers": [ "asdf", "dockerfile", "gomod" ],
+      "matchDatasources": [ "docker", "github-tags", "golang-version" ],
+      "matchUpdateTypes": [ "major" ],
+      "enabled": false // Block all major Go version updates
     },
     {
       // Go Version: Minor updates (treat as major in PR titles)  
