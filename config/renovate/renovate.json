@@ -11,7 +11,8 @@
   ],
 
   "labels": [
-    "renovate" // Standard label for all Renovate PRs
+    "renovate", // Standard label for all Renovate PRs
+    "{{baseBranch}}" // Add branch name as label
   ],
 
   // Branch configuration: main + release branches v0.5+
@@ -52,18 +53,25 @@
       "groupName": "go version",
       "matchPackageNames": [ "golang/go", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ],
       "matchDepNames": [ "go", "golang", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ],
-      "matchManagers": [ "asdf", "dockerfile", "gomod" ],
+      // gomod is not included in this packageManagers list, because the go directive in the go.mod means 
+      // "Compatible with this version or later". So it is advisable to not bump this version unless necessary.
+      // Ref: https://docs.renovatebot.com/modules/manager/gomod/#updating-of-go-mod-and-toolchain-directives 
+      "matchManagers": [ "asdf", "dockerfile" ],
       "matchDatasources": [ "docker", "github-tags", "golang-version" ],
       "matchUpdateTypes": [ "patch" ],
       "commitMessageTopic": "golang version",
       "branchTopic": "go-version"
     },
     {
-      // Go Version: Block actual major updates (1.x -> 2.x)
+      // Go Version: Block actual major updates (1.x -> 2.x).
+      // It also prevents bumps for go-toolset image versions with v9+
       "description": "Block Go major version updates beyond v1.x",
       "matchPackageNames": [ "golang/go", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ],
       "matchDepNames": [ "go", "golang", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ],
-      "matchManagers": [ "asdf", "dockerfile", "gomod" ],
+      // gomod is not included in this packageManagers list, because the go directive in the go.mod means 
+      // "Compatible with this version or later". So it is advisable to not bump this version unless necessary.
+      // Ref: https://docs.renovatebot.com/modules/manager/gomod/#updating-of-go-mod-and-toolchain-directives
+      "matchManagers": [ "asdf", "dockerfile" ],
       "matchDatasources": [ "docker", "github-tags", "golang-version" ],
       "matchUpdateTypes": [ "major" ],
       "enabled": false // Block all major Go version updates
@@ -74,7 +82,10 @@
       "groupName": "go version",
       "matchPackageNames": [ "golang/go", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ],
       "matchDepNames": [ "go", "golang", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ],
-      "matchManagers": [ "asdf", "dockerfile", "gomod" ],
+      // gomod is not included in this packageManagers list, because the go directive in the go.mod means 
+      // "Compatible with this version or later". So it is advisable to not bump this version unless necessary.
+      // Ref: https://docs.renovatebot.com/modules/manager/gomod/#updating-of-go-mod-and-toolchain-directives
+      "matchManagers": [ "asdf", "dockerfile" ],
       "matchDatasources": [ "docker", "github-tags", "golang-version" ],
       "matchUpdateTypes": [ "minor" ],
       "commitMessagePrefix": "🚨",
