@@ -24,17 +24,6 @@
       "automerge": false // Always require manual review
     },
     {
-      // Special case: Go minor updates are actually major changes
-      // Go 1.24 -> 1.25 introduces new language features and should be treated carefully
-      "description": "Treat Go minor updates as major (1.x bumps)",
-      "matchPackageNames": [ "golang/go", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ], // ASDF/Docker sources
-      "matchDepNames": [ "go", "golang", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ], // go.mod directive  
-      "matchUpdateTypes": [ "minor" ],
-      "commitMessagePrefix": "🚨",
-      "labels": [ "renovate", "major" ],
-      "automerge": false
-    },
-    {
       // Docker: Group container image updates
       "description": "Group Docker image updates (excluding Go/Golang images which are handled separately)",
       "matchManagers": [ "dockerfile" ],
@@ -55,18 +44,33 @@
       "groupName": "github actions"
     },
     {
-      // Go Version: Unified Go version management across all sources
-      // This creates a SINGLE PR for Go version updates from:
-      // - .tool-versions (ASDF)
-      // - go.mod directive  
-      // - Dockerfile golang images
-      "description": "Group Go version updates across ASDF (.tool-versions), go.mod directive, and Dockerfile golang images",
+      // Go Version: Patch updates (treat as minor in PR titles)
+      "description": "Group Go patch updates and treat as minor in PR titles",
       "groupName": "go version",
-      "matchPackageNames": [ "golang/go", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ], // ASDF + Docker golang
-      "matchDepNames": [ "go", "golang", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ], // go.mod directive
+      "matchPackageNames": [ "golang/go", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ],
+      "matchDepNames": [ "go", "golang", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ],
+      "matchManagers": [ "asdf", "dockerfile", "gomod" ],
       "matchDatasources": [ "docker", "github-tags", "golang-version" ],
-      "commitMessageTopic": "golang version", // "Update golang version to vX.Y.Z"
-      "branchTopic": "go-version" // Single branch: renovate/go-version
+      "matchUpdateTypes": [ "patch" ],
+      "bumpVersion": "minor",
+      "commitMessageTopic": "golang version",
+      "branchTopic": "go-version"
+    },
+    {
+      // Go Version: Minor updates (treat as major in PR titles)  
+      "description": "Group Go minor updates and treat as major in PR titles",
+      "groupName": "go version",
+      "matchPackageNames": [ "golang/go", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ],
+      "matchDepNames": [ "go", "golang", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ],
+      "matchManagers": [ "asdf", "dockerfile", "gomod" ],
+      "matchDatasources": [ "docker", "github-tags", "golang-version" ],
+      "matchUpdateTypes": [ "minor" ],
+      "bumpVersion": "major",
+      "commitMessagePrefix": "🚨",
+      "labels": [ "renovate", "major" ],
+      "automerge": false,
+      "commitMessageTopic": "golang version",
+      "branchTopic": "go-version"
     },
     {
       // Tekton: Safe to auto-merge (infrastructure as code)
