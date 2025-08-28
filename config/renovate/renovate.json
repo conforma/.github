@@ -15,7 +15,7 @@
   ],
 
   // Branch configuration: main + release branches v0.5+
-  "baseBranchPatterns": [ "main", "/^release-/", "!/^release-v0\\.[0-4]$/" ],
+  "baseBranchPatterns": [ "main", "/^release-/", "!/^release-v0\\.[0-4]/" ],
 
   "packageRules": [
     {
