@@ -24,7 +24,7 @@
       "description": "Highlight major version updates with special labeling and commit prefix",
       "matchUpdateTypes": [ "major" ],
       "commitMessagePrefix": "🚨", // Visual warning in commit messages
-      "labels": [ "renovate", "major" ], // Extra label for filtering
+      "labels": [ "renovate", "major", "{{baseBranch}}" ], // Extra label for filtering
       "automerge": false // Always require manual review
     },
     {
@@ -89,7 +89,7 @@
       "matchDatasources": [ "docker", "github-tags", "golang-version" ],
       "matchUpdateTypes": [ "minor" ],
       "commitMessagePrefix": "🚨",
-      "labels": [ "renovate", "major" ],
+      "labels": [ "renovate", "major", "{{baseBranch}}" ],
       "automerge": false,
       "commitMessageTopic": "golang version",
       "branchTopic": "go-version"
