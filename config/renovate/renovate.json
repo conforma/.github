@@ -39,13 +39,16 @@
       "description": "Group Go module dependency updates (excluding the go directive which is handled separately)",
       "matchManagers": [ "gomod" ],
       "matchDepNames": [ "!go", "!golang", "!docker.io/library/golang", "!registry.access.redhat.com/ubi9/go-toolset" ], // Exclude go directive - it goes to "go version" group
-      "groupName": "go modules"
+      "groupName": "go modules",
+      "schedule": [] // MintMaker compatibility: Override Mintmaker's default schedule to use global schedule
     },
     {
       // GitHub Actions: Group workflow updates
       "description": "Group GitHub Actions workflow updates",
       "matchManagers": [ "github-actions" ],
-      "groupName": "github actions"
+      "groupName": "github actions",
+      "enabled": true, // MintMaker compatibility: Enable GitHub Actions manager (missing from Mintmaker's enabledManagers)
+      "schedule": [] // MintMaker compatibility: Override any default scheduling to use global daily schedule
     },
     {
       // Go Version: Patch updates (treat as minor in PR titles)
@@ -100,7 +103,9 @@
       "matchPackageNames": [ "github.com/tektoncd/pipeline" ],
       "groupName": "tektoncd pipelines",
       "matchUpdateTypes": [ "minor", "patch", "pin", "digest" ], // Exclude major
-      "automerge": true // Low risk - pipeline definitions are versioned
+      "automerge": true, // Low risk - pipeline definitions are versioned
+      "enabled": true, // MintMaker compatibility: Enable Tekton pipeline updates
+      "schedule": [] // MintMaker compatibility: Override Mintmaker's Tuesday-only schedule to use global daily schedule
     }
   ]
 }
