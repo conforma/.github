@@ -51,6 +51,14 @@
       "schedule": [] // MintMaker compatibility: Override any default scheduling to use global daily schedule
     },
     {
+      // Group JavaScript/Node.js dependency updates  
+      "description": "Group npm dependency updates",
+      "matchManagers": [ "npm" ],
+      "groupName": "npm dependencies",
+      "enabled": true, // MintMaker compatibility: Enable GitHub Actions manager (missing from Mintmaker's enabledManagers)
+      "schedule": [] // MintMaker compatibility: Override any default scheduling to use global daily schedule
+    },
+    {
       // Go Version: Patch updates (treat as minor in PR titles)
       "description": "Group Go patch updates and treat as minor in PR titles",
       "groupName": "go version",
