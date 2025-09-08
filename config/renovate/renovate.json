@@ -40,6 +40,7 @@
       "matchManagers": [ "gomod" ],
       "matchDepNames": [ "!go", "!golang", "!docker.io/library/golang", "!registry.access.redhat.com/ubi9/go-toolset" ], // Exclude go directive - it goes to "go version" group
       "groupName": "go modules",
+      "postUpdateOptions": ["gomodUpdateImportPaths"],  // MintMaker compatibility: Disable gomodTidy execution (Mintmaker bot has not enough permissions to run it)
       "schedule": [ "before 4am" ] // MintMaker compatibility: Override mintmaker default weekly scheduling
     },
     {
