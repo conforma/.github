@@ -6,7 +6,7 @@
     "schedule:daily", // Run renovate each day before 4AM
     ":prConcurrentLimit20", // Allow up to 20 open PRs simultaneously
     // Automerge has been disabled due to this permissions issue in Mintmaker: https://redhat-internal.slack.com/archives/C06KTFLDS69/p1758199099457519
-    ":automergePatch", // Auto-merge patch updates (safe changes)
+    // ":automergePatch", // Auto-merge patch updates (safe changes)
     ":semanticCommitsDisabled", // Use plain commit messages
     ":ignoreUnstable" // Skip pre-release versions
   ],
