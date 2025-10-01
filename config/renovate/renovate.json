@@ -5,8 +5,7 @@
   "extends": [
     "schedule:daily", // Run renovate each day before 4AM
     ":prConcurrentLimit20", // Allow up to 20 open PRs simultaneously
-    // Automerge has been disabled due to this permissions issue in Mintmaker: https://redhat-internal.slack.com/archives/C06KTFLDS69/p1758199099457519
-    // ":automergePatch", // Auto-merge patch updates (safe changes)
+    ":automergePatch", // Auto-merge patch updates (safe changes)
     ":semanticCommitsDisabled", // Use plain commit messages
     ":ignoreUnstable" // Skip pre-release versions
   ],
@@ -16,16 +15,8 @@
     "{{baseBranch}}" // Add branch name as label
   ],
 
-  // // Branch configuration: process main branch and release branches from v0.5 onwards
-  // "baseBranchPatterns": [ "main", "/^release-v0\\.(\\d{2,}|[5-9])$/", "/^release-v[1-9]\\d*\\.\\d+$/" ],
-
-  // [WIP] Branch configuration: temporarily process only the main branch, to prevent Mintmaker timeouts
-  "baseBranchPatterns": [ "main" ],
-
-  // Disable artifact error status checks due to Mintmaker GitHub App lacking statuses=write permission
-  "statusCheckNames": {
-    "artifactError": null
-  },
+  // Branch configuration: process main branch and release branches from v0.5 onwards
+  "baseBranchPatterns": [ "main", "/^release-v0\\.(\\d{2,}|[5-9])$/", "/^release-v[1-9]\\d*\\.\\d+$/" ],
 
   "packageRules": [
     {
@@ -48,25 +39,19 @@
       "description": "Group Go module dependency updates (excluding the go directive which is handled separately)",
       "matchManagers": [ "gomod" ],
       "matchDepNames": [ "!go", "!golang", "!docker.io/library/golang", "!registry.access.redhat.com/ubi9/go-toolset" ], // Exclude go directive - it goes to "go version" group
-      "groupName": "go modules",
-      "postUpdateOptions": [ "gomodUpdateImportPaths" ], // MintMaker compatibility: Disable gomodTidy execution (Mintmaker bot has not enough permissions to run it)
-      "schedule": [ "before 4am" ] // MintMaker compatibility: Override mintmaker default weekly scheduling
+      "groupName": "go modules"
     },
     {
       // GitHub Actions: Group workflow updates
       "description": "Group GitHub Actions workflow updates",
       "matchManagers": [ "github-actions" ],
-      "groupName": "github actions",
-      "enabled": true, // MintMaker compatibility: Enable GitHub Actions manager (missing from Mintmaker's enabledManagers)
-      "schedule": [ "before 4am" ] // MintMaker compatibility: Override mintmaker default weekly scheduling
+      "groupName": "github actions"
     },
     {
       // Group JavaScript/Node.js dependency updates  
       "description": "Group npm dependency updates",
       "matchManagers": [ "npm" ],
-      "groupName": "npm dependencies",
-      "enabled": true, // MintMaker compatibility: Enable GitHub Actions manager (missing from Mintmaker's enabledManagers)
-      "schedule": [ "before 4am" ] // MintMaker compatibility: Override mintmaker default weekly scheduling
+      "groupName": "npm dependencies"
     },
     {
       // Go Version: Patch updates (treat as minor in PR titles)
@@ -121,10 +106,7 @@
       "matchPackageNames": [ "github.com/tektoncd/pipeline" ],
       "groupName": "tektoncd pipelines",
       "matchUpdateTypes": [ "minor", "patch", "pin", "digest" ], // Exclude major
-      // Automerge has been disabled due to this permissions issue in Mintmaker: https://redhat-internal.slack.com/archives/C06KTFLDS69/p1758199099457519
-      // "automerge": true, // Low risk - pipeline definitions are versioned
-      "enabled": true, // MintMaker compatibility: Enable Tekton pipeline updates
-      "schedule": [ "before 4am" ] // MintMaker compatibility: Override mintmaker default weekly scheduling
+      "automerge": true // Low risk - pipeline definitions are versioned
     }
   ]
 }
