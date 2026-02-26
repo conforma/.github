@@ -55,18 +55,19 @@
     },
     {
       // Go Version: Patch updates (treat as minor in PR titles)
-      "description": "Group Go patch updates and treat as minor in PR titles",
+      "description": "Block Go patch updates - handled manually",
       "groupName": "go version",
       "matchPackageNames": [ "golang/go", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ],
       "matchDepNames": [ "go", "golang", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ],
-      // gomod is not included in this packageManagers list, because the go directive in the go.mod means 
+      // gomod is not included in this packageManagers list, because the go directive in the go.mod means
       // "Compatible with this version or later". So it is advisable to not bump this version unless necessary.
-      // Ref: https://docs.renovatebot.com/modules/manager/gomod/#updating-of-go-mod-and-toolchain-directives 
+      // Ref: https://docs.renovatebot.com/modules/manager/gomod/#updating-of-go-mod-and-toolchain-directives
       "matchManagers": [ "asdf", "dockerfile" ],
       "matchDatasources": [ "docker", "github-tags", "golang-version" ],
       "matchUpdateTypes": [ "patch" ],
       "commitMessageTopic": "golang version",
-      "branchTopic": "go-version"
+      "branchTopic": "go-version",
+      "enabled": false
     },
     {
       // Go Version: Block actual major updates (1.x -> 2.x).
@@ -83,12 +84,12 @@
       "enabled": false // Block all major Go version updates
     },
     {
-      // Go Version: Minor updates (treat as major in PR titles)  
-      "description": "Group Go minor updates and treat as major in PR titles",
+      // Go Version: Minor updates (treat as major in PR titles)
+      "description": "Block Go minor updates - handled manually",
       "groupName": "go version",
       "matchPackageNames": [ "golang/go", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ],
       "matchDepNames": [ "go", "golang", "docker.io/library/golang", "registry.access.redhat.com/ubi9/go-toolset" ],
-      // gomod is not included in this packageManagers list, because the go directive in the go.mod means 
+      // gomod is not included in this packageManagers list, because the go directive in the go.mod means
       // "Compatible with this version or later". So it is advisable to not bump this version unless necessary.
       // Ref: https://docs.renovatebot.com/modules/manager/gomod/#updating-of-go-mod-and-toolchain-directives
       "matchManagers": [ "asdf", "dockerfile" ],
@@ -98,7 +99,8 @@
       "labels": [ "renovate", "major", "{{baseBranch}}" ],
       "automerge": false,
       "commitMessageTopic": "golang version",
-      "branchTopic": "go-version"
+      "branchTopic": "go-version",
+      "enabled": false
     },
     {
       // Tekton: Safe to auto-merge (infrastructure as code)
