@@ -7,7 +7,8 @@
     ":prConcurrentLimit20", // Allow up to 20 open PRs simultaneously
     ":automergePatch", // Auto-merge patch updates (safe changes)
     ":semanticCommitsDisabled", // Use plain commit messages
-    ":ignoreUnstable" // Skip pre-release versions
+    ":ignoreUnstable", // Skip pre-release versions
+    "helpers:pinGitHubActionDigests" // Pin GitHub Actions to SHA digests for security
   ],
 
   "labels": [
