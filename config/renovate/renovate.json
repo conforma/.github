@@ -22,6 +22,16 @@
   // Run go mod tidy after updating Go modules to prevent stale checksums in go.sum
   "postUpdateOptions": ["gomodTidy"],
 
+  // Supply-chain hardening: don't adopt a release until it has had time to be
+  // vetted (and yanked if malicious). Applies org-wide; security fixes are exempt below.
+  "minimumReleaseAge": "5 days",
+  "internalChecksFilter": "strict", // enforce the age gate even when other updates are pending
+
+  // Genuine security (vulnerability) fixes bypass the cooldown so patches land promptly
+  "vulnerabilityAlerts": {
+    "minimumReleaseAge": "0 days"
+  },
+
   "packageRules": [
     {
       // Global rule: All major updates get special treatment
@@ -50,6 +60,16 @@
       "description": "Group GitHub Actions workflow updates",
       "matchManagers": [ "github-actions" ],
       "groupName": "github actions"
+    },
+    {
+      // Auto-merge SAFE GitHub Actions updates (minor/patch/digest) after the cooldown.
+      // Majors are excluded here, so the global major rule's automerge:false still
+      // applies to them (breaking upgrades always stay manual / human-reviewed).
+      "description": "Auto-merge safe (non-major) GitHub Actions updates",
+      "matchManagers": [ "github-actions" ],
+      "matchUpdateTypes": [ "minor", "patch", "digest", "pinDigest" ],
+      "automerge": true,
+      "platformAutomerge": true
     },
     {
       // Group JavaScript/Node.js dependency updates
