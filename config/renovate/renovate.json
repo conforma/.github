@@ -72,6 +72,17 @@
       "platformAutomerge": true
     },
     {
+      // First-party conforma/* Actions & reusable workflows: skip the release-age
+      // cooldown. The cooldown defends against fresh THIRD-PARTY releases; our own
+      // internal, already-reviewed workflows should propagate immediately. Combined
+      // with org-wide sha_pinning_required, delaying an internal digest bump strands
+      // consumers on a pre-pinning SHA and breaks their runs (see EC-2173/EC-2185).
+      "description": "No release-age cooldown for first-party conforma/* Actions",
+      "matchManagers": [ "github-actions" ],
+      "matchPackageNames": [ "/^conforma\\//" ],
+      "minimumReleaseAge": "0 days"
+    },
+    {
       // Group JavaScript/Node.js dependency updates
       "description": "Group npm dependency updates",
       "matchManagers": [ "npm" ],
