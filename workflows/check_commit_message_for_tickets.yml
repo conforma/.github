@@ -21,9 +21,11 @@ jobs:
         run: |
           PR_DATA=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                     "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}")
-          echo "PR_DATA<<EOF" >> $GITHUB_ENV
-          echo "$PR_DATA" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          {
+            echo "PR_DATA<<EOF"
+            echo "$PR_DATA"
+            echo "EOF"
+          } >> "$GITHUB_ENV"
 
       - name: Check PR body
         run: |
