@@ -16,8 +16,8 @@
     "{{baseBranch}}" // Add branch name as label
   ],
 
-  // Branch configuration: process main branch and release branches from v0.8 onwards
-  "baseBranchPatterns": [ "main", "/^release-v0\\.(\\d{2,}|[8-9])$/", "/^release-v[1-9]\\d*\\.\\d+$/" ],
+  // Target main by default. Repositories can override this list to include maintained release branches.
+  "baseBranchPatterns": ["main"],
 
   // Run go mod tidy after updating Go modules to prevent stale checksums in go.sum
   "postUpdateOptions": ["gomodTidy"],
